@@ -439,10 +439,131 @@ const step1 = document.getElementById('step1');
 const step2 = document.getElementById('step2');
 const step3 = document.getElementById('step3');
 
+// Google Sheets CSV URL
+const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTS8hTJAf_BwC7Dp_DNeMSmB7Ip49tDesgMYhQZ_sii3U632X2ERFbKoZYYk6Qs-b8c7tQw0S7CXGCb/pub?gid=0&single=true&output=csv';
+
+// Parse CSV data from Google Sheets
+function parseCSV(csvText) {
+    const lines = csvText.split('\n');
+    const useCasesFromCSV = [];
+
+    // Skip first 2 header rows and process data rows
+    for (let i = 2; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+
+        // Parse CSV line (handle quoted values with commas)
+        const values = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let char of line) {
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                values.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        values.push(current.trim());
+
+        // Skip empty rows
+        if (!values[0]) continue;
+
+        // Parse use case data
+        const useCase = {
+            id: useCasesFromCSV.length + 1,
+            name: values[0] || '',
+            description: values[1] || '',
+            primaryGoals: values[2] || '',
+            benchmark: {
+                description: values[3] || '',
+                value: parseFloat(values[4]) || 0,
+                unit: '%'
+            },
+            metrics: [],
+            coefficient: parseFloat(values[16]) || 1,
+            formula: values[18] || '',
+            period: values[20] || '',
+            story: values[22] || values[21] || '' // Use Main Story or Background story
+        };
+
+        // Add Metric 1 if exists
+        if (values[6] && values[8]) {
+            useCase.metrics.push({
+                id: 'metric1',
+                description: values[6],
+                defaultValue: parseFloat(values[8].replace(/,/g, '')) || 0,
+                label: values[6].length > 80 ? values[6].substring(0, 77) + '...' : values[6]
+            });
+        }
+
+        // Add Metric 2 if exists
+        if (values[9] && values[11]) {
+            useCase.metrics.push({
+                id: 'metric2',
+                description: values[9],
+                defaultValue: parseFloat(values[11].replace(/,/g, '')) || 0,
+                label: values[9].length > 80 ? values[9].substring(0, 77) + '...' : values[9]
+            });
+        }
+
+        // Add Metric 3 if exists
+        if (values[12] && values[13]) {
+            useCase.metrics.push({
+                id: 'metric3',
+                description: values[12],
+                defaultValue: parseFloat(values[13].replace(/,/g, '')) || 0,
+                label: values[12].length > 80 ? values[12].substring(0, 77) + '...' : values[12]
+            });
+        }
+
+        useCasesFromCSV.push(useCase);
+    }
+
+    return useCasesFromCSV;
+}
+
+// Load data from Google Sheets CSV
+async function loadDataFromGoogleSheets() {
+    try {
+        console.log('Loading data from Google Sheets...');
+        const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const csvText = await response.text();
+        const parsedData = parseCSV(csvText);
+
+        if (parsedData.length > 0) {
+            console.log(`Successfully loaded ${parsedData.length} use cases from Google Sheets`);
+            return parsedData;
+        } else {
+            throw new Error('No data parsed from CSV');
+        }
+    } catch (error) {
+        console.error('Error loading from Google Sheets:', error);
+        console.log('Falling back to embedded data');
+        return null;
+    }
+}
+
 // Initialize app
-function init() {
-    // Use embedded data instead of fetch to avoid CORS issues
-    useCases = USE_CASES_DATA;
+async function init() {
+    // Try to load from Google Sheets first
+    const googleSheetsData = await loadDataFromGoogleSheets();
+
+    if (googleSheetsData) {
+        useCases = googleSheetsData;
+    } else {
+        // Fallback to embedded data
+        useCases = USE_CASES_DATA;
+    }
+
     populateUseCaseSelector();
     attachEventListeners();
 }
