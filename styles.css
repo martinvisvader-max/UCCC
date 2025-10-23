@@ -5,12 +5,24 @@
     box-sizing: border-box;
 }
 
+:root {
+    /* Bloomreach Brand Colors */
+    --bloomreach-yellow: #FFD500;
+    --bloomreach-dark: #1A1A2E;
+    --bloomreach-gray: #2D3748;
+    --bloomreach-light-gray: #F7FAFC;
+    --bloomreach-accent: #FF6B35;
+    --bloomreach-success: #48BB78;
+    --text-dark: #0F1419;
+    --text-gray: #4A5568;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--bloomreach-dark) 0%, var(--bloomreach-gray) 100%);
     min-height: 100vh;
     padding: 20px;
-    color: #333;
+    color: var(--text-dark);
 }
 
 .container {
@@ -18,16 +30,28 @@ body {
     margin: 0 auto;
     background: white;
     border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     overflow: hidden;
 }
 
 /* Header */
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--bloomreach-dark);
     color: white;
     padding: 40px 30px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: var(--bloomreach-yellow);
 }
 
 header h1 {
@@ -38,7 +62,8 @@ header h1 {
 
 .subtitle {
     font-size: 16px;
-    opacity: 0.9;
+    opacity: 0.85;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* Progress Bar */
@@ -46,7 +71,7 @@ header h1 {
     display: flex;
     justify-content: space-between;
     padding: 30px 50px;
-    background: #f8f9fa;
+    background: var(--bloomreach-light-gray);
     position: relative;
 }
 
@@ -57,7 +82,7 @@ header h1 {
     left: 50px;
     right: 50px;
     height: 2px;
-    background: #ddd;
+    background: #E2E8F0;
     transform: translateY(-50%);
     z-index: 0;
 }
@@ -74,8 +99,9 @@ header h1 {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #ddd;
-    color: #666;
+    background: white;
+    color: var(--text-gray);
+    border: 2px solid #E2E8F0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,24 +111,27 @@ header h1 {
 }
 
 .progress-step.active .step-number {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: var(--bloomreach-yellow);
+    color: var(--bloomreach-dark);
+    border-color: var(--bloomreach-yellow);
+    box-shadow: 0 4px 12px rgba(255, 213, 0, 0.4);
+    transform: scale(1.1);
 }
 
 .progress-step.completed .step-number {
-    background: #4caf50;
+    background: var(--bloomreach-success);
     color: white;
+    border-color: var(--bloomreach-success);
 }
 
 .step-label {
     font-size: 12px;
-    color: #666;
+    color: var(--text-gray);
     text-align: center;
 }
 
 .progress-step.active .step-label {
-    color: #667eea;
+    color: var(--bloomreach-dark);
     font-weight: 600;
 }
 
@@ -129,13 +158,13 @@ header h1 {
 }
 
 .step h2 {
-    color: #333;
+    color: var(--bloomreach-dark);
     font-size: 28px;
     margin-bottom: 10px;
 }
 
 .step-description {
-    color: #666;
+    color: var(--text-gray);
     margin-bottom: 30px;
     font-size: 15px;
 }
@@ -154,28 +183,29 @@ header h1 {
     width: 100%;
     padding: 15px 20px;
     font-size: 16px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid #E2E8F0;
     border-radius: 10px;
     background: white;
     cursor: pointer;
     transition: all 0.3s ease;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231A1A2E' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 20px center;
+    color: var(--text-dark);
 }
 
 .use-case-select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--bloomreach-yellow);
+    box-shadow: 0 0 0 3px rgba(255, 213, 0, 0.2);
 }
 
 .use-case-description {
     padding: 20px;
-    background: #f8f9fa;
+    background: var(--bloomreach-light-gray);
     border-radius: 10px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--bloomreach-yellow);
 }
 
 .use-case-description.hidden {
@@ -184,12 +214,12 @@ header h1 {
 
 .use-case-description h3 {
     font-size: 16px;
-    color: #667eea;
+    color: var(--bloomreach-dark);
     margin-bottom: 10px;
 }
 
 .use-case-description p {
-    color: #555;
+    color: var(--text-gray);
     line-height: 1.6;
     margin-bottom: 15px;
 }
@@ -202,11 +232,11 @@ header h1 {
 
 .meta-item {
     font-size: 14px;
-    color: #666;
+    color: var(--text-gray);
 }
 
 .meta-item strong {
-    color: #333;
+    color: var(--bloomreach-dark);
 }
 
 /* Metrics Form */
@@ -224,14 +254,14 @@ header h1 {
 
 .metric-group label {
     font-weight: 600;
-    color: #333;
+    color: var(--bloomreach-dark);
     margin-bottom: 8px;
     font-size: 15px;
 }
 
 .metric-description {
     font-size: 13px;
-    color: #666;
+    color: var(--text-gray);
     margin-bottom: 8px;
     font-style: italic;
 }
@@ -239,15 +269,16 @@ header h1 {
 .metric-group input {
     padding: 12px 15px;
     font-size: 16px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid #E2E8F0;
     border-radius: 8px;
     transition: all 0.3s ease;
+    color: var(--text-dark);
 }
 
 .metric-group input:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--bloomreach-yellow);
+    box-shadow: 0 0 0 3px rgba(255, 213, 0, 0.2);
 }
 
 /* Buttons */
@@ -264,14 +295,15 @@ header h1 {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    background: var(--bloomreach-yellow);
+    color: var(--bloomreach-dark);
+    box-shadow: 0 4px 15px rgba(255, 213, 0, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    box-shadow: 0 6px 20px rgba(255, 213, 0, 0.5);
+    background: #FFDD33;
 }
 
 .btn-primary:disabled {
@@ -280,12 +312,14 @@ header h1 {
 }
 
 .btn-secondary {
-    background: #e0e0e0;
-    color: #333;
+    background: white;
+    color: var(--bloomreach-dark);
+    border: 2px solid #E2E8F0;
 }
 
 .btn-secondary:hover {
-    background: #d0d0d0;
+    background: var(--bloomreach-light-gray);
+    border-color: var(--bloomreach-yellow);
 }
 
 .button-group {
@@ -303,26 +337,40 @@ header h1 {
 }
 
 .result-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--bloomreach-dark);
     color: white;
     padding: 25px;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(26, 26, 46, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.result-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--bloomreach-yellow);
 }
 
 .result-label {
     font-size: 14px;
-    opacity: 0.9;
+    opacity: 0.85;
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .result-value {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 5px;
+    color: var(--bloomreach-yellow);
 }
 
 .result-period {
@@ -332,20 +380,21 @@ header h1 {
 
 /* Story Section */
 .story-section {
-    background: #f8f9fa;
+    background: var(--bloomreach-light-gray);
     padding: 30px;
     border-radius: 15px;
     margin-bottom: 30px;
+    border-left: 4px solid var(--bloomreach-yellow);
 }
 
 .story-section h3 {
-    color: #667eea;
+    color: var(--bloomreach-dark);
     margin-bottom: 20px;
     font-size: 22px;
 }
 
 .story-content {
-    color: #444;
+    color: var(--text-gray);
     line-height: 1.8;
     font-size: 15px;
     white-space: pre-line;
@@ -353,10 +402,10 @@ header h1 {
 
 /* Footer */
 footer {
-    background: #f8f9fa;
+    background: var(--bloomreach-light-gray);
     text-align: center;
     padding: 20px;
-    color: #666;
+    color: var(--text-gray);
     font-size: 13px;
 }
 
