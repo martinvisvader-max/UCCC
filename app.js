@@ -447,10 +447,15 @@ function parseCSV(csvText) {
     const lines = csvText.split('\n');
     const useCasesFromCSV = [];
 
+    console.log(`📊 Parsing CSV: ${lines.length} total lines`);
+
     // Skip first 2 header rows and process data rows
     for (let i = 2; i < lines.length; i++) {
         const line = lines[i].trim();
-        if (!line) continue;
+        if (!line) {
+            console.log(`⏭️ Row ${i + 1}: Empty line, skipping`);
+            continue;
+        }
 
         // Parse CSV line (handle quoted values with commas)
         const values = [];
@@ -469,10 +474,12 @@ function parseCSV(csvText) {
         }
         values.push(current.trim());
 
+        console.log(`🔍 Row ${i + 1}: Column A = "${values[0]}", Total columns = ${values.length}`);
+
         // Skip rows without a valid name in column A (values[0])
         const useCaseName = (values[0] || '').trim();
         if (!useCaseName || useCaseName.length === 0) {
-            console.log(`Skipping row ${i + 1}: No name in column A`);
+            console.log(`❌ Row ${i + 1}: No name in column A, skipping`);
             continue;
         }
 
@@ -501,43 +508,52 @@ function parseCSV(csvText) {
         };
 
         // Add Metric 1 if exists (Column G=description, H=example value)
-        if (values[6]) {  // Column G - Metric 1 description
+        if (values[6] && values[6].trim()) {  // Column G - Metric 1 description
+            const metric1Value = parseFloat((values[7] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric1',
                 description: values[6],                                    // Column G
-                defaultValue: parseFloat((values[7] || '0').replace(/,/g, '')) || 0,  // Column H - Example value
+                defaultValue: metric1Value,                                // Column H - Example value
                 label: values[6].length > 80 ? values[6].substring(0, 77) + '...' : values[6]
             });
+            console.log(`  ➕ Metric 1: "${values[6].substring(0, 50)}..." = ${metric1Value}`);
         }
 
         // Add Metric 2 if exists (Column J=description, K=example value)
-        if (values[9]) {  // Column J - Metric 2 description
+        if (values[9] && values[9].trim()) {  // Column J - Metric 2 description
+            const metric2Value = parseFloat((values[10] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric2',
                 description: values[9],                                    // Column J
-                defaultValue: parseFloat((values[10] || '0').replace(/,/g, '')) || 0,  // Column K - Example value
+                defaultValue: metric2Value,                                // Column K - Example value
                 label: values[9].length > 80 ? values[9].substring(0, 77) + '...' : values[9]
             });
+            console.log(`  ➕ Metric 2: "${values[9].substring(0, 50)}..." = ${metric2Value}`);
         }
 
         // Add Metric 3 if exists (Column M=description, N=example value)
-        if (values[12]) {  // Column M - Metric 3 description
+        if (values[12] && values[12].trim()) {  // Column M - Metric 3 description
+            const metric3Value = parseFloat((values[13] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric3',
                 description: values[12],                                   // Column M
-                defaultValue: parseFloat((values[13] || '0').replace(/,/g, '')) || 0,  // Column N - Example value
+                defaultValue: metric3Value,                                // Column N - Example value
                 label: values[12].length > 80 ? values[12].substring(0, 77) + '...' : values[12]
             });
+            console.log(`  ➕ Metric 3: "${values[12].substring(0, 50)}..." = ${metric3Value}`);
         }
 
         // Only add use case if it has at least one metric
         if (useCase.metrics.length > 0) {
-            console.log(`✓ Added use case: "${useCase.name}" (${useCase.metrics.length} metrics)`);
+            console.log(`✅ Added use case #${useCase.id}: "${useCase.name}" (${useCase.metrics.length} metrics)`);
             useCasesFromCSV.push(useCase);
         } else {
-            console.log(`✗ Skipped "${useCase.name}": No valid metrics found`);
+            console.log(`❌ Skipped "${useCase.name}": No valid metrics found (G, J, M columns empty)`);
         }
     }
+
+    console.log(`\n📋 Summary: ${useCasesFromCSV.length} use cases loaded successfully`);
+    console.log(`Use cases:`, useCasesFromCSV.map(uc => uc.name));
 
     return useCasesFromCSV;
 }
