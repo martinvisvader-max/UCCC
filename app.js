@@ -444,44 +444,72 @@ const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1v
 
 // Parse CSV data from Google Sheets
 function parseCSV(csvText) {
-    const lines = csvText.split('\n');
     const useCasesFromCSV = [];
 
-    console.log(`📊 Parsing CSV: ${lines.length} total lines`);
+    // Better CSV parser that handles multiline quoted values
+    const rows = [];
+    let currentRow = [];
+    let currentField = '';
+    let insideQuotes = false;
+
+    for (let i = 0; i < csvText.length; i++) {
+        const char = csvText[i];
+        const nextChar = csvText[i + 1];
+
+        if (char === '"') {
+            if (insideQuotes && nextChar === '"') {
+                // Escaped quote ("")
+                currentField += '"';
+                i++; // Skip next quote
+            } else {
+                // Toggle quote state
+                insideQuotes = !insideQuotes;
+            }
+        } else if (char === ',' && !insideQuotes) {
+            // End of field
+            currentRow.push(currentField);
+            currentField = '';
+        } else if (char === '\n' && !insideQuotes) {
+            // End of row
+            currentRow.push(currentField);
+            rows.push(currentRow);
+            currentRow = [];
+            currentField = '';
+        } else if (char === '\r') {
+            // Skip carriage return
+            continue;
+        } else {
+            // Regular character
+            currentField += char;
+        }
+    }
+
+    // Add last field and row if any
+    if (currentField || currentRow.length > 0) {
+        currentRow.push(currentField);
+        rows.push(currentRow);
+    }
+
+    console.log(`📊 Parsing CSV: ${rows.length} total rows`);
 
     // Skip first 2 header rows and process data rows
-    for (let i = 2; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) {
-            console.log(`⏭️ Row ${i + 1}: Empty line, skipping`);
+    for (let i = 2; i < rows.length; i++) {
+        const values = rows[i];
+
+        if (!values || values.length === 0 || !values[0]) {
+            console.log(`⏭️ Row ${i + 1}: Empty, skipping`);
             continue;
         }
 
-        // Parse CSV line (handle quoted values with commas)
-        const values = [];
-        let current = '';
-        let inQuotes = false;
-
-        for (let char of line) {
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-                values.push(current.trim());
-                current = '';
-            } else {
-                current += char;
-            }
-        }
-        values.push(current.trim());
-
-        console.log(`🔍 Row ${i + 1}: Column A = "${values[0]}", Total columns = ${values.length}`);
-
-        // Skip rows without a valid name in column A (values[0])
         const useCaseName = (values[0] || '').trim();
+
         if (!useCaseName || useCaseName.length === 0) {
-            console.log(`❌ Row ${i + 1}: No name in column A, skipping`);
+            console.log(`❌ Row ${i + 1}: No name in column A`);
             continue;
         }
+
+        console.log(`🔍 Row ${i + 1}: "${useCaseName}" (${values.length} columns)`);
+
 
         // Parse use case data according to database structure:
         // A=Name, B=Description, C=Primary Goals, D=Benchmark Desc, E=Benchmark Value, F=Sources
