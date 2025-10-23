@@ -781,34 +781,37 @@ function displayResults(calculatedResult) {
 
     // Update result cards
     document.getElementById('resultRevenue').textContent = formatCurrency(revenue);
-    document.getElementById('resultPeriod').textContent = `za ${selectedUseCase.period}`;
+    document.getElementById('resultPeriod').textContent = `per ${selectedUseCase.period}`;
     document.getElementById('resultConversions').textContent = formatNumber(conversions);
     document.getElementById('resultAnnual').textContent = formatCurrency(annualRevenue);
 
     // Generate and display story
     const story = generateStory(revenue, conversions, annualRevenue, calculatedResult.revenueDiff);
-    document.getElementById('storyContent').textContent = story;
+    document.getElementById('storyContent').innerHTML = story;
 }
 
 // Generate story with placeholders replaced
 function generateStory(revenue, conversions, annualRevenue, revenueDiff) {
     let story = selectedUseCase.story;
 
-    // Replace metric placeholders
+    // Replace metric placeholders with bold formatting
     selectedUseCase.metrics.forEach(metric => {
         const value = metricValues[metric.id] || 0;
         const regex = new RegExp(`\\{${metric.id}\\}`, 'g');
-        story = story.replace(regex, formatNumber(value));
+        story = story.replace(regex, `<strong>${formatNumber(value)}</strong>`);
     });
 
-    // Replace calculated values
-    story = story.replace(/\{result\}/g, formatCurrency(revenue));
-    story = story.replace(/\{conversions\}/g, formatNumber(conversions));
-    story = story.replace(/\{annualRevenue\}/g, formatCurrency(annualRevenue));
+    // Replace calculated values with bold formatting
+    story = story.replace(/\{result\}/g, `<strong>${formatCurrency(revenue)}</strong>`);
+    story = story.replace(/\{conversions\}/g, `<strong>${formatNumber(conversions)}</strong>`);
+    story = story.replace(/\{annualRevenue\}/g, `<strong>${formatCurrency(annualRevenue)}</strong>`);
 
     if (revenueDiff > 0) {
-        story = story.replace(/\{revenueDiff\}/g, formatCurrency(revenueDiff));
+        story = story.replace(/\{revenueDiff\}/g, `<strong>${formatCurrency(revenueDiff)}</strong>`);
     }
+
+    // Convert line breaks to HTML
+    story = story.replace(/\n/g, '<br>');
 
     return story;
 }

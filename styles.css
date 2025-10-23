@@ -397,7 +397,11 @@ header h1 {
     color: var(--text-gray);
     line-height: 1.8;
     font-size: 15px;
-    white-space: pre-line;
+}
+
+.story-content strong {
+    color: var(--bloomreach-dark);
+    font-weight: 700;
 }
 
 /* Footer */

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,97 +10,97 @@
     <div class="container">
         <header>
             <h1>Use Case Revenue Calculator</h1>
-            <p class="subtitle">Zisti potenciálny vplyv personalizačných kampaní na tvoj biznis</p>
+            <p class="subtitle">Discover the potential impact of personalization campaigns on your business</p>
         </header>
 
         <!-- Progress Bar -->
         <div class="progress-bar">
             <div class="progress-step active" data-step="1">
                 <div class="step-number">1</div>
-                <div class="step-label">Výber Use Case</div>
+                <div class="step-label">Select Use Case</div>
             </div>
             <div class="progress-step" data-step="2">
                 <div class="step-number">2</div>
-                <div class="step-label">Zadaj Metriky</div>
+                <div class="step-label">Enter Metrics</div>
             </div>
             <div class="progress-step" data-step="3">
                 <div class="step-number">3</div>
-                <div class="step-label">Výsledky</div>
+                <div class="step-label">Results</div>
             </div>
         </div>
 
         <!-- Step 1: Use Case Selection -->
         <div id="step1" class="step active">
-            <h2>Vyber Use Case</h2>
-            <p class="step-description">Vyber typ kampane, ktorú chceš vyhodnotiť:</p>
+            <h2>Select Use Case</h2>
+            <p class="step-description">Choose the type of campaign you want to evaluate:</p>
 
             <div class="use-case-selector">
                 <div class="select-wrapper">
                     <select id="useCaseSelect" class="use-case-select">
-                        <option value="">-- Vyber Use Case --</option>
+                        <option value="">-- Select Use Case --</option>
                     </select>
                 </div>
 
                 <div id="useCaseDescription" class="use-case-description hidden">
-                    <h3>Popis Use Case:</h3>
+                    <h3>Use Case Description:</h3>
                     <p id="useCaseDescriptionText"></p>
                     <div class="use-case-meta">
-                        <span class="meta-item"><strong>Primárny cieľ:</strong> <span id="useCasePrimaryGoal"></span></span>
-                        <span class="meta-item"><strong>Perióda:</strong> <span id="useCasePeriod"></span></span>
+                        <span class="meta-item"><strong>Primary Goal:</strong> <span id="useCasePrimaryGoal"></span></span>
+                        <span class="meta-item"><strong>Period:</strong> <span id="useCasePeriod"></span></span>
                     </div>
                 </div>
             </div>
 
-            <button id="nextToMetrics" class="btn btn-primary" disabled>Pokračovať na metriky</button>
+            <button id="nextToMetrics" class="btn btn-primary" disabled>Continue to Metrics</button>
         </div>
 
         <!-- Step 2: Metrics Input -->
         <div id="step2" class="step">
-            <h2>Zadaj metriky pre vybraný Use Case</h2>
-            <p class="step-description">Zadaj hodnoty metrík z tvojho systému:</p>
+            <h2>Enter Metrics for Selected Use Case</h2>
+            <p class="step-description">Enter metric values from your system:</p>
 
             <form id="metricsForm" class="metrics-form">
                 <!-- Dynamically generated metric inputs -->
             </form>
 
             <div class="button-group">
-                <button id="backToSelection" class="btn btn-secondary">Späť</button>
-                <button id="calculateResults" class="btn btn-primary">Vypočítať výsledok</button>
+                <button id="backToSelection" class="btn btn-secondary">Back</button>
+                <button id="calculateResults" class="btn btn-primary">Calculate Results</button>
             </div>
         </div>
 
         <!-- Step 3: Results -->
         <div id="step3" class="step">
-            <h2>Výsledok analýzy</h2>
+            <h2>Analysis Results</h2>
 
             <div class="results-summary">
                 <div class="result-card">
-                    <div class="result-label">Potenciálny príjem</div>
+                    <div class="result-label">Potential Revenue</div>
                     <div class="result-value" id="resultRevenue">$0</div>
-                    <div class="result-period" id="resultPeriod">za periódu</div>
+                    <div class="result-period" id="resultPeriod">per period</div>
                 </div>
 
                 <div class="result-card">
-                    <div class="result-label">Očakávané konverzie</div>
+                    <div class="result-label">Expected Conversions</div>
                     <div class="result-value" id="resultConversions">0</div>
-                    <div class="result-period">zákazníkov</div>
+                    <div class="result-period">customers</div>
                 </div>
 
                 <div class="result-card">
-                    <div class="result-label">Ročný príjem</div>
+                    <div class="result-label">Annual Revenue</div>
                     <div class="result-value" id="resultAnnual">$0</div>
-                    <div class="result-period">ročne</div>
+                    <div class="result-period">annually</div>
                 </div>
             </div>
 
             <div class="story-section">
-                <h3>Detailná analýza</h3>
+                <h3>Detailed Analysis</h3>
                 <div id="storyContent" class="story-content"></div>
             </div>
 
             <div class="button-group">
-                <button id="backToMetrics" class="btn btn-secondary">Upraviť metriky</button>
-                <button id="startOver" class="btn btn-primary">Nový výpočet</button>
+                <button id="backToMetrics" class="btn btn-secondary">Edit Metrics</button>
+                <button id="startOver" class="btn btn-primary">New Calculation</button>
             </div>
         </div>
     </div>
