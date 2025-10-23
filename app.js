@@ -469,13 +469,17 @@ function parseCSV(csvText) {
         }
         values.push(current.trim());
 
-        // Skip empty rows
-        if (!values[0]) continue;
+        // Skip rows without a valid name in column A (values[0])
+        const useCaseName = (values[0] || '').trim();
+        if (!useCaseName || useCaseName.length === 0) {
+            console.log(`Skipping row ${i + 1}: No name in column A`);
+            continue;
+        }
 
         // Parse use case data
         const useCase = {
             id: useCasesFromCSV.length + 1,
-            name: values[0] || '',
+            name: useCaseName,
             description: values[1] || '',
             primaryGoals: values[2] || '',
             benchmark: {
@@ -520,7 +524,13 @@ function parseCSV(csvText) {
             });
         }
 
-        useCasesFromCSV.push(useCase);
+        // Only add use case if it has at least one metric
+        if (useCase.metrics.length > 0) {
+            console.log(`✓ Added use case: "${useCase.name}" (${useCase.metrics.length} metrics)`);
+            useCasesFromCSV.push(useCase);
+        } else {
+            console.log(`✗ Skipped "${useCase.name}": No valid metrics found`);
+        }
     }
 
     return useCasesFromCSV;
