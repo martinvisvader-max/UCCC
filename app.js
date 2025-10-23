@@ -476,50 +476,56 @@ function parseCSV(csvText) {
             continue;
         }
 
-        // Parse use case data
+        // Parse use case data according to database structure:
+        // A=Name, B=Description, C=Primary Goals, D=Benchmark Desc, E=Benchmark Value, F=Sources
+        // G=Metric1 Desc, H=Metric1 Example, I=JSON(ignore)
+        // J=Metric2 Desc, K=Metric2 Example, L=JSON(ignore)
+        // M=Metric3 Desc, N=Metric3 Example, O=JSON(ignore)
+        // P,Q=ignore, R=Formula, S=Result Example, T=Period, U=Story
         const useCase = {
             id: useCasesFromCSV.length + 1,
-            name: useCaseName,
-            description: values[1] || '',
-            primaryGoals: values[2] || '',
+            name: useCaseName,                    // Column A
+            description: values[1] || '',         // Column B - What the use case does
+            primaryGoals: values[2] || '',        // Column C - Primary goals
             benchmark: {
-                description: values[3] || '',
-                value: parseFloat(values[4]) || 0,
+                description: values[3] || '',     // Column D - Benchmark description
+                value: parseFloat(values[4]) || 0, // Column E - Benchmark value
+                sources: values[5] || '',         // Column F - Benchmark sources (for footnote)
                 unit: '%'
             },
             metrics: [],
-            coefficient: parseFloat(values[16]) || 1,
-            formula: values[18] || '',
-            period: values[20] || '',
-            story: values[22] || values[21] || '' // Use Main Story or Background story
+            formula: values[17] || '',            // Column R - Formula text
+            resultExample: values[18] || '',      // Column S - Result example
+            period: values[19] || '',             // Column T - Period
+            story: values[20] || ''               // Column U - Story template
         };
 
-        // Add Metric 1 if exists
-        if (values[6] && values[8]) {
+        // Add Metric 1 if exists (Column G=description, H=example value)
+        if (values[6]) {  // Column G - Metric 1 description
             useCase.metrics.push({
                 id: 'metric1',
-                description: values[6],
-                defaultValue: parseFloat(values[8].replace(/,/g, '')) || 0,
+                description: values[6],                                    // Column G
+                defaultValue: parseFloat((values[7] || '0').replace(/,/g, '')) || 0,  // Column H - Example value
                 label: values[6].length > 80 ? values[6].substring(0, 77) + '...' : values[6]
             });
         }
 
-        // Add Metric 2 if exists
-        if (values[9] && values[11]) {
+        // Add Metric 2 if exists (Column J=description, K=example value)
+        if (values[9]) {  // Column J - Metric 2 description
             useCase.metrics.push({
                 id: 'metric2',
-                description: values[9],
-                defaultValue: parseFloat(values[11].replace(/,/g, '')) || 0,
+                description: values[9],                                    // Column J
+                defaultValue: parseFloat((values[10] || '0').replace(/,/g, '')) || 0,  // Column K - Example value
                 label: values[9].length > 80 ? values[9].substring(0, 77) + '...' : values[9]
             });
         }
 
-        // Add Metric 3 if exists
-        if (values[12] && values[13]) {
+        // Add Metric 3 if exists (Column M=description, N=example value)
+        if (values[12]) {  // Column M - Metric 3 description
             useCase.metrics.push({
                 id: 'metric3',
-                description: values[12],
-                defaultValue: parseFloat(values[13].replace(/,/g, '')) || 0,
+                description: values[12],                                   // Column M
+                defaultValue: parseFloat((values[13] || '0').replace(/,/g, '')) || 0,  // Column N - Example value
                 label: values[12].length > 80 ? values[12].substring(0, 77) + '...' : values[12]
             });
         }
@@ -716,26 +722,24 @@ function calculateAndShowResults() {
 function calculateFormula() {
     const formula = selectedUseCase.formula.toLowerCase();
     const benchmark = selectedUseCase.benchmark.value / 100; // Convert percentage to decimal
-    const coefficient = selectedUseCase.coefficient;
 
     let result = 0;
     let conversions = 0;
     let revenueDiff = 0;
 
-    // Handle different formula types
-    if (formula.includes('metric1 x metric2 x benchmark x coefficient')) {
+    // Handle different formula types based on Column R (Formula text)
+    if (formula.includes('metric1 x metric2 x benchmark')) {
         const metric1 = metricValues.metric1 || 0;
         const metric2 = metricValues.metric2 || 0;
-        result = metric1 * metric2 * benchmark * coefficient;
+        result = metric1 * metric2 * benchmark;
         conversions = Math.round(metric1 * benchmark);
     }
-    else if (formula.includes('repeat customers / total buyers')) {
-        // Post-Purchase formula: (metric2 / metric1) * benchmark * metric3 * coefficient
+    else if (formula.includes('repeat customers / total buyers') || formula.includes('metric2 / metric1')) {
+        // Post-Purchase formula: metric2 * benchmark * metric3
         const metric1 = metricValues.metric1 || 0; // total buyers
         const metric2 = metricValues.metric2 || 0; // repeat buyers
         const metric3 = metricValues.metric3 || 0; // AOV
-        const repeatRate = metric1 > 0 ? (metric2 / metric1) : 0;
-        result = metric2 * benchmark * metric3 * coefficient;
+        result = metric2 * benchmark * metric3;
         conversions = Math.round(metric2 * benchmark);
     }
     else if (formula.includes('metric1 x benchmark x (metric3 - metric2)')) {
@@ -744,20 +748,20 @@ function calculateFormula() {
         const metric2 = metricValues.metric2 || 0;
         const metric3 = metricValues.metric3 || 0;
         revenueDiff = metric3 - metric2;
-        result = metric1 * benchmark * revenueDiff * coefficient;
+        result = metric1 * benchmark * revenueDiff;
         conversions = Math.round(metric1 * benchmark);
     }
-    else if (formula.includes('metric1 x benchmark')) {
+    else if (formula.includes('metric1 x benchmark') && !formula.includes('metric2')) {
         // NPS formula (no revenue, just count)
         const metric1 = metricValues.metric1 || 0;
         result = Math.round(metric1 * benchmark);
         conversions = result;
     }
     else {
-        // Default formula
+        // Default formula: metric1 x metric2 x benchmark
         const metric1 = metricValues.metric1 || 0;
         const metric2 = metricValues.metric2 || 0;
-        result = metric1 * metric2 * benchmark * coefficient;
+        result = metric1 * metric2 * benchmark;
         conversions = Math.round(metric1 * benchmark);
     }
 
@@ -797,7 +801,14 @@ function displayResults(calculatedResult) {
 
     // Generate and display story
     const story = generateStory(revenue, conversions, annualRevenue, calculatedResult.revenueDiff);
-    document.getElementById('storyContent').innerHTML = story;
+
+    // Add benchmark sources as footnote if available
+    let storyHTML = story;
+    if (selectedUseCase.benchmark.sources) {
+        storyHTML += `<br><br><div class="benchmark-sources"><small><strong>Source:</strong> <a href="${selectedUseCase.benchmark.sources}" target="_blank" rel="noopener">${selectedUseCase.benchmark.sources}</a></small></div>`;
+    }
+
+    document.getElementById('storyContent').innerHTML = storyHTML;
 }
 
 // Generate story with placeholders replaced
