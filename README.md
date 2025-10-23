@@ -21,7 +21,18 @@ Webová aplikácia na výpočet potenciálneho príjmu z personalizačných e-ma
 
 ## Použitie
 
-### Spustenie lokálne
+### Možnosť 1: Stiahnuť a spustiť lokálne
+
+1. **Stiahni repozitár:**
+   - Klikni na zelené tlačidlo "Code" na GitHube
+   - Vyber "Download ZIP"
+   - Rozbaľ ZIP súbor
+
+2. **Otvor aplikáciu:**
+   - Otvor súbor `index.html` v prehliadači (dvojklik na súbor)
+   - Hotovo! Aplikácia by mala bežať
+
+### Možnosť 2: Cez HTTP server (pre vývoj)
 
 1. Otvor terminál v priečinku projektu
 2. Spusti HTTP server:
@@ -30,7 +41,14 @@ Webová aplikácia na výpočet potenciálneho príjmu z personalizačných e-ma
    ```
 3. Otvor prehliadač a choď na: `http://localhost:8000`
 
-### Alebo jednoducho otvor `index.html` priamo v prehliadači
+### Možnosť 3: GitHub Pages (najjednoduchšie - live online)
+
+1. Choď do repozitára na GitHube
+2. Klikni na **Settings** (Nastavenia)
+3. V ľavom menu klikni na **Pages**
+4. Pod "Branch" vyber svoj branch (napr. `claude/create-multi-step-web-app-011CUQDQwgS1FSFfvTajMBYm`)
+5. Klikni **Save**
+6. Za pár sekúnd budeš mať link na živú aplikáciu (napr. `https://tvojemeno.github.io/UCCC/`)
 
 ## Súbory
 
