@@ -536,6 +536,8 @@ function parseCSV(csvText) {
         };
 
         // Add Metric 1 if exists (Column G=description, H=example value)
+        console.log(`  🔎 Column G (Metric 1 desc): "${values[6] || '(empty)'}"`);
+        console.log(`  🔎 Column H (Metric 1 value): "${values[7] || '(empty)'}"`);
         if (values[6] && values[6].trim()) {  // Column G - Metric 1 description
             const metric1Value = parseFloat((values[7] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
@@ -544,10 +546,14 @@ function parseCSV(csvText) {
                 defaultValue: metric1Value,                                // Column H - Example value
                 label: values[6].length > 80 ? values[6].substring(0, 77) + '...' : values[6]
             });
-            console.log(`  ➕ Metric 1: "${values[6].substring(0, 50)}..." = ${metric1Value}`);
+            console.log(`  ✅ Metric 1 added: value = ${metric1Value}`);
+        } else {
+            console.log(`  ❌ Metric 1 skipped: Column G empty or whitespace`);
         }
 
         // Add Metric 2 if exists (Column J=description, K=example value)
+        console.log(`  🔎 Column J (Metric 2 desc): "${values[9] || '(empty)'}"`);
+        console.log(`  🔎 Column K (Metric 2 value): "${values[10] || '(empty)'}"`);
         if (values[9] && values[9].trim()) {  // Column J - Metric 2 description
             const metric2Value = parseFloat((values[10] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
@@ -556,10 +562,14 @@ function parseCSV(csvText) {
                 defaultValue: metric2Value,                                // Column K - Example value
                 label: values[9].length > 80 ? values[9].substring(0, 77) + '...' : values[9]
             });
-            console.log(`  ➕ Metric 2: "${values[9].substring(0, 50)}..." = ${metric2Value}`);
+            console.log(`  ✅ Metric 2 added: value = ${metric2Value}`);
+        } else {
+            console.log(`  ❌ Metric 2 skipped: Column J empty or whitespace`);
         }
 
         // Add Metric 3 if exists (Column M=description, N=example value)
+        console.log(`  🔎 Column M (Metric 3 desc): "${values[12] || '(empty)'}"`);
+        console.log(`  🔎 Column N (Metric 3 value): "${values[13] || '(empty)'}"`);
         if (values[12] && values[12].trim()) {  // Column M - Metric 3 description
             const metric3Value = parseFloat((values[13] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
@@ -568,7 +578,9 @@ function parseCSV(csvText) {
                 defaultValue: metric3Value,                                // Column N - Example value
                 label: values[12].length > 80 ? values[12].substring(0, 77) + '...' : values[12]
             });
-            console.log(`  ➕ Metric 3: "${values[12].substring(0, 50)}..." = ${metric3Value}`);
+            console.log(`  ✅ Metric 3 added: value = ${metric3Value}`);
+        } else {
+            console.log(`  ❌ Metric 3 skipped: Column M empty or whitespace`);
         }
 
         // Only add use case if it has at least one metric
