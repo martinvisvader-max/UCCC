@@ -422,6 +422,35 @@ header h1 {
     text-decoration: underline;
 }
 
+/* Documentation Link */
+.docs-link {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #E2E8F0;
+    text-align: center;
+}
+
+.btn-docs {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--bloomreach-dark);
+    color: var(--bloomreach-yellow);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--bloomreach-dark);
+}
+
+.btn-docs:hover {
+    background: var(--bloomreach-yellow);
+    color: var(--bloomreach-dark);
+    border-color: var(--bloomreach-yellow);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* Footer */
 footer {
     background: var(--bloomreach-light-gray);

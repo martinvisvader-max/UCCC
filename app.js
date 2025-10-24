@@ -439,34 +439,35 @@ const step1 = document.getElementById('step1');
 const step2 = document.getElementById('step2');
 const step3 = document.getElementById('step3');
 
-// Parse CSV data with new column structure (0-24)
+// Parse CSV data with new column structure (0-25)
 // To update data: paste new CSV in parseCSV function call and reload
 // Column mapping:
 // 0: Use Case Name
-// 1: Use Case Docs (link)
-// 2: What the Use Case does? (description)
-// 3: Primary Goals
-// 4: Benchmark Description
-// 5: Benchmark Sources
-// 6: Metric1 Description
-// 7: Metric1 JSON (ignore)
-// 8: Metric2 Description
-// 9: Metric2 JSON (ignore)
-// 10: Metric3 Description
-// 11: Metric3 JSON (ignore)
-// 12: Coefficient Description
-// 13: Coefficient Value
-// 14: Benchmark Value
-// 15: Metric1 Value (default)
-// 16: Metric2 Value (default)
-// 17: Metric3 Value (default)
-// 18: LIFT Formula Description
-// 19: LIFT Formula Calculation
-// 20: Period
-// 21: (empty)
-// 22: Main Story Dynamic (template with placeholders like [Metric1 Value], [Benchmark Value])
-// 23: Main Story (static)
-// 24: Side Story
+// 1: Use Case Build Link
+// 2: Use Case Docs Links (documentation URL)
+// 3: What the Use Case does? (description)
+// 4: Primary Goals of the Use Case
+// 5: Benchmark Description
+// 6: Benchmark Sources
+// 7: Metric1 Description
+// 8: Metric1 JSON For Import (ignore)
+// 9: Metric2 Description
+// 10: Metric2 JSON For Import (ignore)
+// 11: Metric3 Description
+// 12: Metric3 JSON For Import (ignore)
+// 13: Coefficient Description
+// 14: Coefficient Value
+// 15: Benchmark Value
+// 16: Metric1 Value (default)
+// 17: Metric2 Value (default)
+// 18: Metric3 Value (default)
+// 19: LIFT Formula Description
+// 20: LIFT Formula Calculation
+// 21: Period
+// 22: Main Story Calculated
+// 23: Main Story Parametrized (template with placeholders like [Metric1 Value])
+// 24: Main Story Plain
+// 25: Side Story
 function parseCSV(csvText) {
     const useCasesFromCSV = [];
 
@@ -538,71 +539,72 @@ function parseCSV(csvText) {
         const useCase = {
             id: useCasesFromCSV.length + 1,
             name: useCaseName,                                        // Column 0: Use Case Name
-            useCaseDocs: values[1] || '',                            // Column 1: Use Case Docs (link)
-            description: values[2] || '',                            // Column 2: What the Use Case does?
-            primaryGoals: values[3] || '',                           // Column 3: Primary Goals
+            buildLink: values[1] || '',                              // Column 1: Use Case Build Link
+            docsLink: values[2] || '',                               // Column 2: Use Case Docs Links
+            description: values[3] || '',                            // Column 3: What the Use Case does?
+            primaryGoals: values[4] || '',                           // Column 4: Primary Goals
             benchmark: {
-                description: values[4] || '',                        // Column 4: Benchmark Description
-                sources: values[5] || '',                            // Column 5: Benchmark Sources
-                value: parseFloat(values[14]) || 0,                  // Column 14: Benchmark Value
+                description: values[5] || '',                        // Column 5: Benchmark Description
+                sources: values[6] || '',                            // Column 6: Benchmark Sources
+                value: parseFloat(values[15]) || 0,                  // Column 15: Benchmark Value
                 unit: '%'
             },
-            coefficient: parseFloat(values[13]) || 1,                // Column 13: Coefficient Value
+            coefficient: parseFloat(values[14]) || 1,                // Column 14: Coefficient Value
             metrics: [],
-            formulaDescription: values[18] || '',                    // Column 18: LIFT Formula Description
-            formulaCalculation: values[19] || '',                    // Column 19: LIFT Formula Calculation
-            period: values[20] || '',                                // Column 20: Period
-            story: values[22] || '',                                 // Column 22: Main Story Dynamic
-            mainStory: values[23] || '',                             // Column 23: Main Story (static)
-            sideStory: values[24] || ''                              // Column 24: Side Story
+            formulaDescription: values[19] || '',                    // Column 19: LIFT Formula Description
+            formulaCalculation: values[20] || '',                    // Column 20: LIFT Formula Calculation
+            period: values[21] || '',                                // Column 21: Period
+            story: values[23] || '',                                 // Column 23: Main Story Parametrized
+            mainStory: values[24] || '',                             // Column 24: Main Story Plain
+            sideStory: values[25] || ''                              // Column 25: Side Story
         };
 
-        // Add Metric 1 if exists (Column 6=description, Column 15=default value)
-        console.log(`  🔎 Column 6 (Metric 1 desc): "${values[6] || '(empty)'}"`);
-        console.log(`  🔎 Column 15 (Metric 1 value): "${values[15] || '(empty)'}"`);
-        if (values[6] && values[6].trim()) {
-            const metric1Value = parseFloat((values[15] || '0').replace(/,/g, '')) || 0;
+        // Add Metric 1 if exists (Column 7=description, Column 16=default value)
+        console.log(`  🔎 Column 7 (Metric 1 desc): "${values[7] || '(empty)'}"`);
+        console.log(`  🔎 Column 16 (Metric 1 value): "${values[16] || '(empty)'}"`);
+        if (values[7] && values[7].trim()) {
+            const metric1Value = parseFloat((values[16] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric1',
-                description: values[6],                              // Column 6: Metric1 Description
-                defaultValue: metric1Value,                          // Column 15: Metric1 Value
-                label: values[6].length > 80 ? values[6].substring(0, 77) + '...' : values[6]
+                description: values[7],                              // Column 7: Metric1 Description
+                defaultValue: metric1Value,                          // Column 16: Metric1 Value
+                label: values[7].length > 80 ? values[7].substring(0, 77) + '...' : values[7]
             });
             console.log(`  ✅ Metric 1 added: value = ${metric1Value}`);
         } else {
-            console.log(`  ❌ Metric 1 skipped: Column 6 empty`);
+            console.log(`  ❌ Metric 1 skipped: Column 7 empty`);
         }
 
-        // Add Metric 2 if exists (Column 8=description, Column 16=default value)
-        console.log(`  🔎 Column 8 (Metric 2 desc): "${values[8] || '(empty)'}"`);
-        console.log(`  🔎 Column 16 (Metric 2 value): "${values[16] || '(empty)'}"`);
-        if (values[8] && values[8].trim()) {
-            const metric2Value = parseFloat((values[16] || '0').replace(/,/g, '')) || 0;
+        // Add Metric 2 if exists (Column 9=description, Column 17=default value)
+        console.log(`  🔎 Column 9 (Metric 2 desc): "${values[9] || '(empty)'}"`);
+        console.log(`  🔎 Column 17 (Metric 2 value): "${values[17] || '(empty)'}"`);
+        if (values[9] && values[9].trim()) {
+            const metric2Value = parseFloat((values[17] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric2',
-                description: values[8],                              // Column 8: Metric2 Description
-                defaultValue: metric2Value,                          // Column 16: Metric2 Value
-                label: values[8].length > 80 ? values[8].substring(0, 77) + '...' : values[8]
+                description: values[9],                              // Column 9: Metric2 Description
+                defaultValue: metric2Value,                          // Column 17: Metric2 Value
+                label: values[9].length > 80 ? values[9].substring(0, 77) + '...' : values[9]
             });
             console.log(`  ✅ Metric 2 added: value = ${metric2Value}`);
         } else {
-            console.log(`  ❌ Metric 2 skipped: Column 8 empty`);
+            console.log(`  ❌ Metric 2 skipped: Column 9 empty`);
         }
 
-        // Add Metric 3 if exists (Column 10=description, Column 17=default value)
-        console.log(`  🔎 Column 10 (Metric 3 desc): "${values[10] || '(empty)'}"`);
-        console.log(`  🔎 Column 17 (Metric 3 value): "${values[17] || '(empty)'}"`);
-        if (values[10] && values[10].trim()) {
-            const metric3Value = parseFloat((values[17] || '0').replace(/,/g, '')) || 0;
+        // Add Metric 3 if exists (Column 11=description, Column 18=default value)
+        console.log(`  🔎 Column 11 (Metric 3 desc): "${values[11] || '(empty)'}"`);
+        console.log(`  🔎 Column 18 (Metric 3 value): "${values[18] || '(empty)'}"`);
+        if (values[11] && values[11].trim()) {
+            const metric3Value = parseFloat((values[18] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric3',
-                description: values[10],                             // Column 10: Metric3 Description
-                defaultValue: metric3Value,                          // Column 17: Metric3 Value
-                label: values[10].length > 80 ? values[10].substring(0, 77) + '...' : values[10]
+                description: values[11],                             // Column 11: Metric3 Description
+                defaultValue: metric3Value,                          // Column 18: Metric3 Value
+                label: values[11].length > 80 ? values[11].substring(0, 77) + '...' : values[11]
             });
             console.log(`  ✅ Metric 3 added: value = ${metric3Value}`);
         } else {
-            console.log(`  ❌ Metric 3 skipped: Column 10 empty`);
+            console.log(`  ❌ Metric 3 skipped: Column 11 empty`);
         }
 
         // Only add use case if it has at least one metric
@@ -866,6 +868,11 @@ function displayResults(calculatedResult) {
     let storyHTML = story;
     if (selectedUseCase.benchmark.sources) {
         storyHTML += `<br><br><div class="benchmark-sources"><small><strong>Source:</strong> <a href="${selectedUseCase.benchmark.sources}" target="_blank" rel="noopener">${selectedUseCase.benchmark.sources}</a></small></div>`;
+    }
+
+    // Add documentation link if available
+    if (selectedUseCase.docsLink) {
+        storyHTML += `<br><br><div class="docs-link"><a href="${selectedUseCase.docsLink}" target="_blank" rel="noopener" class="btn-docs">📖 View Documentation</a></div>`;
     }
 
     document.getElementById('storyContent').innerHTML = storyHTML;
