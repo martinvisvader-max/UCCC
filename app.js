@@ -3,6 +3,7 @@ const USE_CASES_DATA = [
   {
     "id": 1,
     "name": "Personalized Abandoned Cart Email",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/personalized-abandoned-cart-email",
     "description": "When customers abandon their shopping basket, a personalized message is sent with items they left in the cart to encourage conversion",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -32,6 +33,7 @@ const USE_CASES_DATA = [
   {
     "id": 2,
     "name": "Abandoned Cart Email with Recommendations",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/omnichannel-abandoned-cart-flow",
     "description": "When customers abandon their shopping basket, a personalized message is sent with items they left in the cart + reco items to encourage conversion.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -61,6 +63,7 @@ const USE_CASES_DATA = [
   {
     "id": 3,
     "name": "Abandoned Browse Flow",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/abandoned-browse-email",
     "description": "By sending personalized emails to customers who've browsed at least 1 item in the last X days but have not added to cart nor have purchased, this flow re-engages visitors and reminds them of viewed products.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -90,6 +93,7 @@ const USE_CASES_DATA = [
   {
     "id": 4,
     "name": "Welcome Flow",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/welcome-flow",
     "description": "A sequence of personalized welcome communications sent to new subscribers or customers, introducing the brand and driving initial engagement.",
     "primaryGoals": "Drive new subscribers to first purchase - Conversion and Revenue",
     "benchmark": {
@@ -119,6 +123,7 @@ const USE_CASES_DATA = [
   {
     "id": 5,
     "name": "Post-Purchase Email With Recommendations",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/post-purchase-email-with-recommendations",
     "description": "14 days after a purchase, this email sends relevant product recommendations and an voucher incentive to increase repeat purchase rate and customer lifetime value.",
     "primaryGoals": "Conversion and Revenue + purchase frequency",
     "benchmark": {
@@ -154,6 +159,7 @@ const USE_CASES_DATA = [
   {
     "id": 6,
     "name": "Post-Purchase NPS Flow",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/post-purchase-nps-survey-email",
     "description": "An automated NPS survey email sent after a purchase to capture customer feedback and enhance loyalty while the experience is fresh.",
     "primaryGoals": "Retention and CX",
     "benchmark": {
@@ -177,6 +183,7 @@ const USE_CASES_DATA = [
   {
     "id": 7,
     "name": "Birthday Campaign",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/birthday-campaign",
     "description": "A timed campaign around a customer's birthday, often including a greeting and special offer to boost loyalty and engagement.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -206,6 +213,7 @@ const USE_CASES_DATA = [
   {
     "id": 8,
     "name": "Purchase Anniversary Recommendations",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/purchase-anniversary-recommendations",
     "description": "A campaign timed to the anniversary of a past purchase, offering personalized product recommendations to re-engage the customer.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -235,6 +243,7 @@ const USE_CASES_DATA = [
   {
     "id": 9,
     "name": "Reactivation Campaign for 'Lapsing' and 'Lapsed' Subscribers",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/reactivation-campaign-lapsing-lapsed-subscribers",
     "description": "A campaign targeting subscribers who are becoming inactive (lapsing) or already inactive (lapsed) to win them back with relevant offers.",
     "primaryGoals": "Get customers to active subs + Conversion and Revenue",
     "benchmark": {
@@ -270,6 +279,7 @@ const USE_CASES_DATA = [
   {
     "id": 10,
     "name": "Reactivation Campaign for Disengaged Email Subscribers",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/reactivation-campaign-disengaged-email-subscribers",
     "description": "A targeted email campaign aimed at subscribers who haven't engaged with recent emails, to re-activate their interest.",
     "primaryGoals": "Repurchase rate of churning customers LTV + Conversion and Revenue",
     "benchmark": {
@@ -299,6 +309,7 @@ const USE_CASES_DATA = [
   {
     "id": 11,
     "name": "Automated Favorite Brand Newsletter With New Items",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/automated-favorite-brand-newsletter-new-items",
     "description": "An automated newsletter sent when new items from a customer's favourite brand become available, to drive engagement and sales.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -328,6 +339,7 @@ const USE_CASES_DATA = [
   {
     "id": 12,
     "name": "Automated Newsletter for New Items of Interest",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/automated-newsletter-new-items-of-interest",
     "description": "An automated newsletter that delivers new product items tailored to each customer's interests or browsing/purchase history.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -357,6 +369,7 @@ const USE_CASES_DATA = [
   {
     "id": 13,
     "name": "Bi-Weekly Product Recommendation Newsletter",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/bi-weekly-product-recommendation-newsletter",
     "description": "A newsletter sent every two weeks featuring personalized product recommendations based on browsing and purchase behaviour.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -386,6 +399,7 @@ const USE_CASES_DATA = [
   {
     "id": 14,
     "name": "Retention Campaign for Repeat Purchasers",
+    "docsLink": "https://documentation.bloomreach.com/engagement/docs/retention-campaign-repeat-purchasers",
     "description": "A campaign focused on customers who already purchase repeatedly, aimed at enhancing loyalty, increasing frequency and value of purchases.",
     "primaryGoals": "Conversion and Revenue + purchase frequency",
     "benchmark": {
