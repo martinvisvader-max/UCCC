@@ -439,10 +439,34 @@ const step1 = document.getElementById('step1');
 const step2 = document.getElementById('step2');
 const step3 = document.getElementById('step3');
 
-// Google Sheets CSV URL
-const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTS8hTJAf_BwC7Dp_DNeMSmB7Ip49tDesgMYhQZ_sii3U632X2ERFbKoZYYk6Qs-b8c7tQw0S7CXGCb/pub?gid=0&single=true&output=csv';
-
-// Parse CSV data from Google Sheets
+// Parse CSV data with new column structure (0-24)
+// To update data: paste new CSV in parseCSV function call and reload
+// Column mapping:
+// 0: Use Case Name
+// 1: Use Case Docs (link)
+// 2: What the Use Case does? (description)
+// 3: Primary Goals
+// 4: Benchmark Description
+// 5: Benchmark Sources
+// 6: Metric1 Description
+// 7: Metric1 JSON (ignore)
+// 8: Metric2 Description
+// 9: Metric2 JSON (ignore)
+// 10: Metric3 Description
+// 11: Metric3 JSON (ignore)
+// 12: Coefficient Description
+// 13: Coefficient Value
+// 14: Benchmark Value
+// 15: Metric1 Value (default)
+// 16: Metric2 Value (default)
+// 17: Metric3 Value (default)
+// 18: LIFT Formula Description
+// 19: LIFT Formula Calculation
+// 20: Period
+// 21: (empty)
+// 22: Main Story Dynamic (template with placeholders like [Metric1 Value], [Benchmark Value])
+// 23: Main Story (static)
+// 24: Side Story
 function parseCSV(csvText) {
     const useCasesFromCSV = [];
 
@@ -504,91 +528,89 @@ function parseCSV(csvText) {
         const useCaseName = (values[0] || '').trim();
 
         if (!useCaseName || useCaseName.length === 0) {
-            console.log(`❌ Row ${i + 1}: No name in column A`);
+            console.log(`❌ Row ${i + 1}: No name in column 0`);
             continue;
         }
 
         console.log(`🔍 Row ${i + 1}: "${useCaseName}" (${values.length} columns)`);
 
-
-        // Parse use case data according to database structure:
-        // A=Name, B=Description, C=Primary Goals, D=Benchmark Desc, E=Benchmark Value, F=Sources
-        // G=Metric1 Desc, H=Metric1 Example, I=JSON(ignore)
-        // J=Metric2 Desc, K=Metric2 Example, L=JSON(ignore)
-        // M=Metric3 Desc, N=Metric3 Example, O=JSON(ignore)
-        // P,Q=ignore, R=Formula, S=Result Example, T=Period, U=Story
+        // Parse use case data according to NEW database structure (columns 0-24):
         const useCase = {
             id: useCasesFromCSV.length + 1,
-            name: useCaseName,                    // Column A
-            description: values[1] || '',         // Column B - What the use case does
-            primaryGoals: values[2] || '',        // Column C - Primary goals
+            name: useCaseName,                                        // Column 0: Use Case Name
+            useCaseDocs: values[1] || '',                            // Column 1: Use Case Docs (link)
+            description: values[2] || '',                            // Column 2: What the Use Case does?
+            primaryGoals: values[3] || '',                           // Column 3: Primary Goals
             benchmark: {
-                description: values[3] || '',     // Column D - Benchmark description
-                value: parseFloat(values[4]) || 0, // Column E - Benchmark value
-                sources: values[5] || '',         // Column F - Benchmark sources (for footnote)
+                description: values[4] || '',                        // Column 4: Benchmark Description
+                sources: values[5] || '',                            // Column 5: Benchmark Sources
+                value: parseFloat(values[14]) || 0,                  // Column 14: Benchmark Value
                 unit: '%'
             },
+            coefficient: parseFloat(values[13]) || 1,                // Column 13: Coefficient Value
             metrics: [],
-            formula: values[17] || '',            // Column R - Formula text
-            resultExample: values[18] || '',      // Column S - Result example
-            period: values[19] || '',             // Column T - Period
-            story: values[20] || ''               // Column U - Story template
+            formulaDescription: values[18] || '',                    // Column 18: LIFT Formula Description
+            formulaCalculation: values[19] || '',                    // Column 19: LIFT Formula Calculation
+            period: values[20] || '',                                // Column 20: Period
+            story: values[22] || '',                                 // Column 22: Main Story Dynamic
+            mainStory: values[23] || '',                             // Column 23: Main Story (static)
+            sideStory: values[24] || ''                              // Column 24: Side Story
         };
 
-        // Add Metric 1 if exists (Column G=description, H=example value)
-        console.log(`  🔎 Column G (Metric 1 desc): "${values[6] || '(empty)'}"`);
-        console.log(`  🔎 Column H (Metric 1 value): "${values[7] || '(empty)'}"`);
-        if (values[6] && values[6].trim()) {  // Column G - Metric 1 description
-            const metric1Value = parseFloat((values[7] || '0').replace(/,/g, '')) || 0;
+        // Add Metric 1 if exists (Column 6=description, Column 15=default value)
+        console.log(`  🔎 Column 6 (Metric 1 desc): "${values[6] || '(empty)'}"`);
+        console.log(`  🔎 Column 15 (Metric 1 value): "${values[15] || '(empty)'}"`);
+        if (values[6] && values[6].trim()) {
+            const metric1Value = parseFloat((values[15] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric1',
-                description: values[6],                                    // Column G
-                defaultValue: metric1Value,                                // Column H - Example value
+                description: values[6],                              // Column 6: Metric1 Description
+                defaultValue: metric1Value,                          // Column 15: Metric1 Value
                 label: values[6].length > 80 ? values[6].substring(0, 77) + '...' : values[6]
             });
             console.log(`  ✅ Metric 1 added: value = ${metric1Value}`);
         } else {
-            console.log(`  ❌ Metric 1 skipped: Column G empty or whitespace`);
+            console.log(`  ❌ Metric 1 skipped: Column 6 empty`);
         }
 
-        // Add Metric 2 if exists (Column J=description, K=example value)
-        console.log(`  🔎 Column J (Metric 2 desc): "${values[9] || '(empty)'}"`);
-        console.log(`  🔎 Column K (Metric 2 value): "${values[10] || '(empty)'}"`);
-        if (values[9] && values[9].trim()) {  // Column J - Metric 2 description
-            const metric2Value = parseFloat((values[10] || '0').replace(/,/g, '')) || 0;
+        // Add Metric 2 if exists (Column 8=description, Column 16=default value)
+        console.log(`  🔎 Column 8 (Metric 2 desc): "${values[8] || '(empty)'}"`);
+        console.log(`  🔎 Column 16 (Metric 2 value): "${values[16] || '(empty)'}"`);
+        if (values[8] && values[8].trim()) {
+            const metric2Value = parseFloat((values[16] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric2',
-                description: values[9],                                    // Column J
-                defaultValue: metric2Value,                                // Column K - Example value
-                label: values[9].length > 80 ? values[9].substring(0, 77) + '...' : values[9]
+                description: values[8],                              // Column 8: Metric2 Description
+                defaultValue: metric2Value,                          // Column 16: Metric2 Value
+                label: values[8].length > 80 ? values[8].substring(0, 77) + '...' : values[8]
             });
             console.log(`  ✅ Metric 2 added: value = ${metric2Value}`);
         } else {
-            console.log(`  ❌ Metric 2 skipped: Column J empty or whitespace`);
+            console.log(`  ❌ Metric 2 skipped: Column 8 empty`);
         }
 
-        // Add Metric 3 if exists (Column M=description, N=example value)
-        console.log(`  🔎 Column M (Metric 3 desc): "${values[12] || '(empty)'}"`);
-        console.log(`  🔎 Column N (Metric 3 value): "${values[13] || '(empty)'}"`);
-        if (values[12] && values[12].trim()) {  // Column M - Metric 3 description
-            const metric3Value = parseFloat((values[13] || '0').replace(/,/g, '')) || 0;
+        // Add Metric 3 if exists (Column 10=description, Column 17=default value)
+        console.log(`  🔎 Column 10 (Metric 3 desc): "${values[10] || '(empty)'}"`);
+        console.log(`  🔎 Column 17 (Metric 3 value): "${values[17] || '(empty)'}"`);
+        if (values[10] && values[10].trim()) {
+            const metric3Value = parseFloat((values[17] || '0').replace(/,/g, '')) || 0;
             useCase.metrics.push({
                 id: 'metric3',
-                description: values[12],                                   // Column M
-                defaultValue: metric3Value,                                // Column N - Example value
-                label: values[12].length > 80 ? values[12].substring(0, 77) + '...' : values[12]
+                description: values[10],                             // Column 10: Metric3 Description
+                defaultValue: metric3Value,                          // Column 17: Metric3 Value
+                label: values[10].length > 80 ? values[10].substring(0, 77) + '...' : values[10]
             });
             console.log(`  ✅ Metric 3 added: value = ${metric3Value}`);
         } else {
-            console.log(`  ❌ Metric 3 skipped: Column M empty or whitespace`);
+            console.log(`  ❌ Metric 3 skipped: Column 10 empty`);
         }
 
         // Only add use case if it has at least one metric
         if (useCase.metrics.length > 0) {
-            console.log(`✅ Added use case #${useCase.id}: "${useCase.name}" (${useCase.metrics.length} metrics)`);
+            console.log(`✅ Added use case #${useCase.id}: "${useCase.name}" (${useCase.metrics.length} metrics, coefficient: ${useCase.coefficient})`);
             useCasesFromCSV.push(useCase);
         } else {
-            console.log(`❌ Skipped "${useCase.name}": No valid metrics found (G, J, M columns empty)`);
+            console.log(`❌ Skipped "${useCase.name}": No valid metrics found`);
         }
     }
 
@@ -598,43 +620,13 @@ function parseCSV(csvText) {
     return useCasesFromCSV;
 }
 
-// Load data from Google Sheets CSV
-async function loadDataFromGoogleSheets() {
-    try {
-        console.log('Loading data from Google Sheets...');
-        const response = await fetch(GOOGLE_SHEETS_CSV_URL);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const csvText = await response.text();
-        const parsedData = parseCSV(csvText);
-
-        if (parsedData.length > 0) {
-            console.log(`Successfully loaded ${parsedData.length} use cases from Google Sheets`);
-            return parsedData;
-        } else {
-            throw new Error('No data parsed from CSV');
-        }
-    } catch (error) {
-        console.error('Error loading from Google Sheets:', error);
-        console.log('Falling back to embedded data');
-        return null;
-    }
-}
-
 // Initialize app
-async function init() {
-    // Try to load from Google Sheets first
-    const googleSheetsData = await loadDataFromGoogleSheets();
+function init() {
+    // Use embedded data (no more Google Sheets sync)
+    // To update data: paste new CSV and call parseCSV() with the CSV text
+    useCases = USE_CASES_DATA;
 
-    if (googleSheetsData) {
-        useCases = googleSheetsData;
-    } else {
-        // Fallback to embedded data
-        useCases = USE_CASES_DATA;
-    }
+    console.log(`📦 Loaded ${useCases.length} use cases from embedded data`);
 
     populateUseCaseSelector();
     attachEventListeners();
@@ -776,27 +768,36 @@ function calculateAndShowResults() {
 
 // Calculate formula
 function calculateFormula() {
-    const formula = selectedUseCase.formula.toLowerCase();
+    // Use formulaCalculation if available (new structure), otherwise fall back to formula field (old structure)
+    const formula = (selectedUseCase.formulaCalculation || selectedUseCase.formula || '').toLowerCase();
     const benchmark = selectedUseCase.benchmark.value / 100; // Convert percentage to decimal
+    const coefficient = selectedUseCase.coefficient || 1; // Get coefficient from use case, default to 1
 
     let result = 0;
     let conversions = 0;
     let revenueDiff = 0;
 
-    // Handle different formula types based on Column R (Formula text)
+    console.log(`📐 Calculating with formula: "${formula}"`);
+    console.log(`📊 Benchmark: ${benchmark} (${selectedUseCase.benchmark.value}%)`);
+    console.log(`🔢 Coefficient: ${coefficient}`);
+
+    // Handle different formula types
     if (formula.includes('metric1 x metric2 x benchmark')) {
+        // Standard formula: metric1 * metric2 * benchmark * coefficient
         const metric1 = metricValues.metric1 || 0;
         const metric2 = metricValues.metric2 || 0;
-        result = metric1 * metric2 * benchmark;
+        result = metric1 * metric2 * benchmark * coefficient;
         conversions = Math.round(metric1 * benchmark);
+        console.log(`✅ Formula: ${metric1} × ${metric2} × ${benchmark} × ${coefficient} = ${result}`);
     }
     else if (formula.includes('repeat customers / total buyers') || formula.includes('metric2 / metric1')) {
-        // Post-Purchase formula: metric2 * benchmark * metric3
+        // Post-Purchase formula: metric2 * benchmark * metric3 * coefficient
         const metric1 = metricValues.metric1 || 0; // total buyers
         const metric2 = metricValues.metric2 || 0; // repeat buyers
         const metric3 = metricValues.metric3 || 0; // AOV
-        result = metric2 * benchmark * metric3;
+        result = metric2 * benchmark * metric3 * coefficient;
         conversions = Math.round(metric2 * benchmark);
+        console.log(`✅ Formula: ${metric2} × ${benchmark} × ${metric3} × ${coefficient} = ${result}`);
     }
     else if (formula.includes('metric1 x benchmark x (metric3 - metric2)')) {
         // Reactivation formula
@@ -804,21 +805,24 @@ function calculateFormula() {
         const metric2 = metricValues.metric2 || 0;
         const metric3 = metricValues.metric3 || 0;
         revenueDiff = metric3 - metric2;
-        result = metric1 * benchmark * revenueDiff;
+        result = metric1 * benchmark * revenueDiff * coefficient;
         conversions = Math.round(metric1 * benchmark);
+        console.log(`✅ Formula: ${metric1} × ${benchmark} × (${metric3} - ${metric2}) × ${coefficient} = ${result}`);
     }
     else if (formula.includes('metric1 x benchmark') && !formula.includes('metric2')) {
-        // NPS formula (no revenue, just count)
+        // NPS formula (no revenue, just count) - coefficient may not apply here
         const metric1 = metricValues.metric1 || 0;
         result = Math.round(metric1 * benchmark);
         conversions = result;
+        console.log(`✅ Formula: ${metric1} × ${benchmark} = ${result}`);
     }
     else {
-        // Default formula: metric1 x metric2 x benchmark
+        // Default formula: metric1 x metric2 x benchmark x coefficient
         const metric1 = metricValues.metric1 || 0;
         const metric2 = metricValues.metric2 || 0;
-        result = metric1 * metric2 * benchmark;
+        result = metric1 * metric2 * benchmark * coefficient;
         conversions = Math.round(metric1 * benchmark);
+        console.log(`✅ Default formula: ${metric1} × ${metric2} × ${benchmark} × ${coefficient} = ${result}`);
     }
 
     return {
@@ -868,23 +872,57 @@ function displayResults(calculatedResult) {
 }
 
 // Generate story with placeholders replaced
+// New format uses [Placeholder Name] instead of {placeholder}
 function generateStory(revenue, conversions, annualRevenue, revenueDiff) {
     let story = selectedUseCase.story;
 
-    // Replace metric placeholders with bold formatting
-    selectedUseCase.metrics.forEach(metric => {
+    // Replace metric value placeholders with bold formatting
+    // Support both old format {metric1} and new format [Metric1 Value]
+    selectedUseCase.metrics.forEach((metric, index) => {
         const value = metricValues[metric.id] || 0;
-        const regex = new RegExp(`\\{${metric.id}\\}`, 'g');
-        story = story.replace(regex, `<strong>${formatNumber(value)}</strong>`);
+
+        // Old format: {metric1}, {metric2}, {metric3}
+        const oldRegex = new RegExp(`\\{${metric.id}\\}`, 'g');
+        story = story.replace(oldRegex, `<strong>${formatNumber(value)}</strong>`);
+
+        // New format: [Metric1 Value], [Metric2 Value], [Metric3 Value]
+        const metricNumber = index + 1;
+        const newRegex = new RegExp(`\\[Metric${metricNumber} Value\\]`, 'g');
+        story = story.replace(newRegex, `<strong>${formatNumber(value)}</strong>`);
     });
 
     // Replace calculated values with bold formatting
+    // Old format
     story = story.replace(/\{result\}/g, `<strong>${formatCurrency(revenue)}</strong>`);
     story = story.replace(/\{conversions\}/g, `<strong>${formatNumber(conversions)}</strong>`);
     story = story.replace(/\{annualRevenue\}/g, `<strong>${formatCurrency(annualRevenue)}</strong>`);
 
+    // New format
+    story = story.replace(/\[Result\]/g, `<strong>${formatCurrency(revenue)}</strong>`);
+    story = story.replace(/\[Revenue\]/g, `<strong>${formatCurrency(revenue)}</strong>`);
+    story = story.replace(/\[Conversions\]/g, `<strong>${formatNumber(conversions)}</strong>`);
+    story = story.replace(/\[Annual Revenue\]/g, `<strong>${formatCurrency(annualRevenue)}</strong>`);
+
+    // Benchmark value
+    const benchmarkValue = selectedUseCase.benchmark.value;
+    story = story.replace(/\[Benchmark Value\]/g, `<strong>${benchmarkValue}%</strong>`);
+
+    // Period
+    story = story.replace(/\[Period\]/g, `<strong>${selectedUseCase.period}</strong>`);
+
+    // Coefficient
+    if (selectedUseCase.coefficient) {
+        story = story.replace(/\[Coefficient\]/g, `<strong>${selectedUseCase.coefficient}</strong>`);
+    }
+
+    // Lift Formula Calculation
+    if (selectedUseCase.formulaCalculation) {
+        story = story.replace(/\[Lift Formula Calculation\]/g, `<strong>${selectedUseCase.formulaCalculation}</strong>`);
+    }
+
     if (revenueDiff > 0) {
         story = story.replace(/\{revenueDiff\}/g, `<strong>${formatCurrency(revenueDiff)}</strong>`);
+        story = story.replace(/\[Revenue Diff\]/g, `<strong>${formatCurrency(revenueDiff)}</strong>`);
     }
 
     // Convert line breaks to HTML
