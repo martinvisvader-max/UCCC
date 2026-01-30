@@ -2,8 +2,12 @@
 const USE_CASES_DATA = [
   {
     "id": 1,
+    "code": "LACP",
     "name": "Personalized Abandoned Cart Email",
+    "channel": "Email",
+    "goal": "Acquire Customers",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/personalized-abandoned-cart-email",
+    "comingSoon": false,
     "description": "When customers abandon their shopping basket, a personalized message is sent with items they left in the cart to encourage conversion",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -32,8 +36,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 2,
+    "code": "LACR",
     "name": "Abandoned Cart Email with Recommendations",
+    "channel": "Email",
+    "goal": "Acquire Customers",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/omnichannel-abandoned-cart-flow",
+    "comingSoon": false,
     "description": "When customers abandon their shopping basket, a personalized message is sent with items they left in the cart + reco items to encourage conversion.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -62,8 +70,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 3,
+    "code": "LABF",
     "name": "Abandoned Browse Flow",
+    "channel": "Email",
+    "goal": "Acquire Customers",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/abandoned-browse-email",
+    "comingSoon": false,
     "description": "By sending personalized emails to customers who've browsed at least 1 item in the last X days but have not added to cart nor have purchased, this flow re-engages visitors and reminds them of viewed products.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -92,8 +104,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 4,
+    "code": "LWEF",
     "name": "Welcome Flow",
+    "channel": "Email",
+    "goal": "Increase Retention",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/welcome-flow",
+    "comingSoon": false,
     "description": "A sequence of personalized welcome communications sent to new subscribers or customers, introducing the brand and driving initial engagement.",
     "primaryGoals": "Drive new subscribers to first purchase - Conversion and Revenue",
     "benchmark": {
@@ -122,8 +138,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 5,
+    "code": "LPFU",
     "name": "Post-Purchase Email With Recommendations",
+    "channel": "Email",
+    "goal": "Increase Retention",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/post-purchase-email-with-recommendations",
+    "comingSoon": false,
     "description": "14 days after a purchase, this email sends relevant product recommendations and an voucher incentive to increase repeat purchase rate and customer lifetime value.",
     "primaryGoals": "Conversion and Revenue + purchase frequency",
     "benchmark": {
@@ -158,8 +178,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 6,
+    "code": "LNPS",
     "name": "Post-Purchase NPS Flow",
+    "channel": "Email",
+    "goal": "Increase Retention",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/post-purchase-nps-survey-email",
+    "comingSoon": false,
     "description": "An automated NPS survey email sent after a purchase to capture customer feedback and enhance loyalty while the experience is fresh.",
     "primaryGoals": "Retention and CX",
     "benchmark": {
@@ -182,8 +206,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 7,
+    "code": "LBDC",
     "name": "Birthday Campaign",
+    "channel": "Email",
+    "goal": "Increase Retention",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/birthday-campaign",
+    "comingSoon": false,
     "description": "A timed campaign around a customer's birthday, often including a greeting and special offer to boost loyalty and engagement.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -212,8 +240,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 8,
+    "code": "LPAC",
     "name": "Purchase Anniversary Recommendations",
+    "channel": "Email",
+    "goal": "Increase Retention",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/purchase-anniversary-recommendations",
+    "comingSoon": false,
     "description": "A campaign timed to the anniversary of a past purchase, offering personalized product recommendations to re-engage the customer.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -242,8 +274,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 9,
+    "code": "OCAR",
     "name": "Reactivation Campaign for 'Lapsing' and 'Lapsed' Subscribers",
+    "channel": "Email",
+    "goal": "Reengage Subscribers",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/reactivation-campaign-lapsing-lapsed-subscribers",
+    "comingSoon": false,
     "description": "A campaign targeting subscribers who are becoming inactive (lapsing) or already inactive (lapsed) to win them back with relevant offers.",
     "primaryGoals": "Get customers to active subs + Conversion and Revenue",
     "benchmark": {
@@ -278,8 +314,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 10,
+    "code": "LPRC",
     "name": "Reactivation Campaign for Disengaged Email Subscribers",
+    "channel": "Email",
+    "goal": "Reengage Subscribers",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/reactivation-campaign-disengaged-email-subscribers",
+    "comingSoon": false,
     "description": "A targeted email campaign aimed at subscribers who haven't engaged with recent emails, to re-activate their interest.",
     "primaryGoals": "Repurchase rate of churning customers LTV + Conversion and Revenue",
     "benchmark": {
@@ -308,8 +348,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 11,
+    "code": "LBAN",
     "name": "Automated Favorite Brand Newsletter With New Items",
+    "channel": "Email",
+    "goal": "Reactivate Customers",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/automated-favorite-brand-newsletter-new-items",
+    "comingSoon": false,
     "description": "An automated newsletter sent when new items from a customer's favourite brand become available, to drive engagement and sales.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -338,8 +382,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 12,
+    "code": "LCAN",
     "name": "Automated Newsletter for New Items of Interest",
+    "channel": "Email",
+    "goal": "Reactivate Customers",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/automated-newsletter-new-items-of-interest",
+    "comingSoon": false,
     "description": "An automated newsletter that delivers new product items tailored to each customer's interests or browsing/purchase history.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -368,8 +416,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 13,
+    "code": "LTPR",
     "name": "Bi-Weekly Product Recommendation Newsletter",
+    "channel": "Email",
+    "goal": "Reactivate Customers",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/bi-weekly-product-recommendation-newsletter",
+    "comingSoon": false,
     "description": "A newsletter sent every two weeks featuring personalized product recommendations based on browsing and purchase behaviour.",
     "primaryGoals": "Conversion and Revenue",
     "benchmark": {
@@ -398,8 +450,12 @@ const USE_CASES_DATA = [
   },
   {
     "id": 14,
+    "code": "LRRP",
     "name": "Retention Campaign for Repeat Purchasers",
+    "channel": "Email",
+    "goal": "Increase Retention",
     "docsLink": "https://documentation.bloomreach.com/engagement/docs/retention-campaign-repeat-purchasers",
+    "comingSoon": false,
     "description": "A campaign focused on customers who already purchase repeatedly, aimed at enhancing loyalty, increasing frequency and value of purchases.",
     "primaryGoals": "Conversion and Revenue + purchase frequency",
     "benchmark": {
@@ -425,6 +481,242 @@ const USE_CASES_DATA = [
     "formula": "metric1 x metric2 x benchmark x coefficient",
     "period": "90 days",
     "story": "In the last 365 days, around {metric1} email-subscribed customers have made 2+ purchases but haven't bought anything in the last 90 days — making them high-value targets for a retention campaign.\nBased on industry benchmarks, repurchase campaigns aimed at repeat buyers typically achieve a conversion rate of around 0.22%.\nThat means approximately {conversions} customers re-engaging and making another purchase.\nWith an average order value of ${metric2}, this represents about ${result} in incremental revenue every 90 days — or roughly ${annualRevenue} annually.\nRetaining repeat purchasers is far more cost-effective than acquiring new customers, and these campaigns help prevent valuable customers from slipping away.\nA timely, personalized retention campaign can reactivate high-value buyers, boost purchase frequency, and significantly increase customer lifetime value."
+  },
+  // ============= COMING SOON USE CASES =============
+  // These use cases are from the catalog but don't have lift calculator data yet
+  {
+    "id": 15,
+    "code": "LSAB",
+    "name": "Abandoned Browse SMS",
+    "channel": "SMS",
+    "goal": "Acquire Customers",
+    "description": "With this Use Case, you send a personalized SMS message with product links to remind your customers of the items that intrigued them.",
+    "comingSoon": true
+  },
+  {
+    "id": 16,
+    "code": "LSAC",
+    "name": "Abandoned Cart SMS",
+    "channel": "SMS",
+    "goal": "Acquire Customers",
+    "description": "This use case reminds your customers of the items they left behind, and encourages them to complete their purchase with an automatic SMS message and a product link.",
+    "comingSoon": true
+  },
+  {
+    "id": 17,
+    "code": "LSDO",
+    "name": "SMS Subscription Banner With Offer",
+    "channel": "SMS, Weblayers",
+    "goal": "Grow Database",
+    "description": "Acquire new customers and reward them for their subscription with a predefined banner with two-tap technology that effortlessly incentivizes your customers to consent to communication.",
+    "comingSoon": true
+  },
+  {
+    "id": 18,
+    "code": "LSFS",
+    "name": "Flash Sale SMS",
+    "channel": "SMS",
+    "goal": "Reactivate Customers",
+    "description": "In this one-off campaign, inform your customers about the time-limited hot sale in your e-store via SMS.",
+    "comingSoon": true
+  },
+  {
+    "id": 19,
+    "code": "WBSI",
+    "name": "AI-Segmented Single Opt-in Email Subscription Banner",
+    "channel": "Weblayers, Email",
+    "goal": "Grow Database",
+    "description": "The theory is simple: by showing visitors an incentive that is more likely to attract them, they will also be more inclined to subscribe.",
+    "comingSoon": true
+  },
+  {
+    "id": 20,
+    "code": "WSSP",
+    "name": "Social Proof Banner",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "This Use Case provides a standard view count banner to drive social proof on product detail pages.",
+    "comingSoon": true
+  },
+  {
+    "id": 21,
+    "code": "WCPR",
+    "name": "Recommendations Caroussel Banner",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "Display a carousel banner with personalized recommendations.",
+    "comingSoon": true
+  },
+  {
+    "id": 22,
+    "code": "WGAW",
+    "name": "Gamified Banners",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "Make your on-site experience interactive with gamified banners that let shoppers win a voucher towards their next purchase.",
+    "comingSoon": true
+  },
+  {
+    "id": 23,
+    "code": "WOEM",
+    "name": "On-Exit Mobile Banner",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "Detect when a mobile visitor is about to leave your website and inspire them to keep shopping with an on-exit mobile banner.",
+    "comingSoon": true
+  },
+  {
+    "id": 24,
+    "code": "OWIC",
+    "name": "Weather Influenced Campaign",
+    "channel": "Email",
+    "goal": "Increase Retention",
+    "description": "Stay up-to-date on your customers' weather needs with our weather-influenced campaign.",
+    "comingSoon": true
+  },
+  {
+    "id": 25,
+    "code": "WZPD",
+    "name": "Zero-Party Data Banner",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "Gather valuable zero-party data from your customers that you can use to personalize your campaigns.",
+    "comingSoon": true
+  },
+  {
+    "id": 26,
+    "code": "LMZD",
+    "name": "Multistep Zero-Party Data Banner",
+    "channel": "Weblayers",
+    "goal": "Grow Database",
+    "description": "Ask your customers to share their information and subscribe to a newsletter through a short, multi-step banner.",
+    "comingSoon": true
+  },
+  {
+    "id": 27,
+    "code": "LABC",
+    "name": "Abandoned Cart Banner",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "The abandoned cart weblayer will remind your customers of the products they left in their cart during their last session.",
+    "comingSoon": true
+  },
+  {
+    "id": 28,
+    "code": "LNDC",
+    "name": "Next-Day Delivery Countdown Banner",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "This use case allows you to highlight the urgency if a customer wants next-day delivery.",
+    "comingSoon": true
+  },
+  {
+    "id": 29,
+    "code": "LPAA",
+    "name": "Automated Price Drop Email Alert",
+    "channel": "Email",
+    "goal": "Acquire Customers",
+    "description": "The watchdog automatic price drop alert on items viewed twice in a month will automatically send an email when there's been a price drop.",
+    "comingSoon": true
+  },
+  {
+    "id": 30,
+    "code": "LTAU",
+    "name": "Social Media Ad Audiences",
+    "channel": "Ad Audiences",
+    "goal": "Drive Traffic",
+    "description": "Ads Audiences streamline your advertising efforts by ensuring you reach the right customers through Google Ads and Facebook Ads.",
+    "comingSoon": true
+  },
+  {
+    "id": 31,
+    "code": "LDCB",
+    "name": "Discount Countdown Banner",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "Easily display a countdown on your website with the discount you are offering.",
+    "comingSoon": true
+  },
+  {
+    "id": 32,
+    "code": "LABL",
+    "name": "Abandoned Browse Banner",
+    "channel": "Weblayers",
+    "goal": "Acquire Customers",
+    "description": "This Use Case is designed to remind customers what they were browsing during the last session with a browse banner.",
+    "comingSoon": true
+  },
+  {
+    "id": 33,
+    "code": "LRAA",
+    "name": "Automated Restock Email Alert",
+    "channel": "Email",
+    "goal": "Acquire Customers",
+    "description": "If a customer views a product that is out of stock, the item is automatically recognized.",
+    "comingSoon": true
+  },
+  {
+    "id": 34,
+    "code": "LOPR",
+    "name": "Email and SMS Reactivation Campaign",
+    "channel": "Email, SMS",
+    "goal": "Reengage Subscribers",
+    "description": "This use case will target lapsing customers with customized email and personalized SMS.",
+    "comingSoon": true
+  },
+  {
+    "id": 35,
+    "code": "OACO",
+    "name": "Omnichannel Abandoned Cart Flow",
+    "channel": "Email, SMS, Ad Audiences, Browser Push Notifications, Mobile Push Notifications",
+    "goal": "Acquire Customers",
+    "description": "When customers abandon their shopping basket, a personalized email, browser/mobile push notification, or SMS/MMS is sent to them.",
+    "comingSoon": true
+  },
+  {
+    "id": 36,
+    "code": "OLOP",
+    "name": "Loyalty Program",
+    "channel": "Email",
+    "goal": "Increase Retention",
+    "description": "Assign loyalty tiers based on a customer's purchase behavior, email engagement, and browsing history.",
+    "comingSoon": true
+  },
+  {
+    "id": 37,
+    "code": "WSOI",
+    "name": "Single Opt-in Subscription Banner",
+    "channel": "Email, Weblayers",
+    "goal": "Grow Database",
+    "description": "The web layer ensures that only an email address in the format of example@example.com gets through.",
+    "comingSoon": true
+  },
+  {
+    "id": 38,
+    "code": "WISB",
+    "name": "Interactive Subscriber Banner",
+    "channel": "Weblayers, Email, SMS",
+    "goal": "Grow Database",
+    "description": "This use case focuses on gathering zero-party data and obtaining email/SMS consents from first-time website visitors.",
+    "comingSoon": true
+  },
+  {
+    "id": 39,
+    "code": "ORAF",
+    "name": "Refer a Friend Campaign",
+    "channel": "Email",
+    "goal": "Acquire Customers",
+    "description": "The Refer a Friend campaign encourages your customers to spread the word about your brand by rewarding both them and their friends.",
+    "comingSoon": true
+  },
+  {
+    "id": 40,
+    "code": "OWEF",
+    "name": "Advanced Welcome Flow",
+    "channel": "Email",
+    "goal": "Increase Retention",
+    "description": "The welcome flow includes two email sequences based on customer behavior: one for those who gave consent during purchase and another for those who subscribed without purchasing.",
+    "comingSoon": true
   }
 ];
 
@@ -683,8 +975,31 @@ function handleUseCaseSelection() {
 
     if (selectedUseCase) {
         useCaseDescriptionText.textContent = selectedUseCase.description;
-        useCasePrimaryGoal.textContent = selectedUseCase.primaryGoals;
-        useCasePeriod.textContent = selectedUseCase.period;
+
+        // Show goal and period if available
+        if (selectedUseCase.primaryGoals) {
+            useCasePrimaryGoal.textContent = selectedUseCase.primaryGoals;
+        } else if (selectedUseCase.goal) {
+            useCasePrimaryGoal.textContent = selectedUseCase.goal;
+        }
+
+        if (selectedUseCase.period) {
+            useCasePeriod.textContent = selectedUseCase.period;
+        } else {
+            useCasePeriod.textContent = selectedUseCase.comingSoon ? 'Coming Soon' : 'N/A';
+        }
+
+        // Show channel info if available
+        if (selectedUseCase.channel) {
+            const channelInfo = document.createElement('p');
+            channelInfo.innerHTML = `<strong>Channel:</strong> ${selectedUseCase.channel}`;
+            // Remove existing channel info if any
+            const existingChannel = useCaseDescription.querySelector('.channel-info');
+            if (existingChannel) existingChannel.remove();
+            channelInfo.className = 'channel-info';
+            useCaseDescription.appendChild(channelInfo);
+        }
+
         useCaseDescription.classList.remove('hidden');
         nextToMetrics.disabled = false;
     }
@@ -729,14 +1044,45 @@ function setActiveStep(stepNumber) {
 function goToMetricsStep() {
     if (!selectedUseCase) return;
 
-    generateMetricsForm();
+    // Check if this is a "coming soon" use case
+    if (selectedUseCase.comingSoon) {
+        showComingSoonMessage();
+    } else {
+        generateMetricsForm();
+    }
+
     goToStep2();
+}
+
+// Show "Coming Soon" message for use cases without calculator data
+function showComingSoonMessage() {
+    metricsForm.innerHTML = '';
+
+    const comingSoonDiv = document.createElement('div');
+    comingSoonDiv.className = 'coming-soon-message';
+    comingSoonDiv.innerHTML = `
+        <h3>🚀 Lift Calculator Coming Soon!</h3>
+        <p>The lift calculator for <strong>${selectedUseCase.name}</strong> is currently under development.</p>
+        <p><strong>Use Case Code:</strong> ${selectedUseCase.code}</p>
+        <p><strong>Channel:</strong> ${selectedUseCase.channel}</p>
+        <p><strong>Goal:</strong> ${selectedUseCase.goal}</p>
+        <p style="margin-top: 20px;">This use case is available in the Bloomreach platform, but revenue impact calculations are not yet available in this calculator.</p>
+        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Check back soon for full lift calculation capabilities!</p>
+    `;
+
+    metricsForm.appendChild(comingSoonDiv);
+
+    // Hide the calculate button for coming soon cases
+    calculateResults.style.display = 'none';
 }
 
 // Generate metrics form dynamically
 function generateMetricsForm() {
     metricsForm.innerHTML = '';
     metricValues = {};
+
+    // Show the calculate button for normal cases
+    calculateResults.style.display = 'block';
 
     selectedUseCase.metrics.forEach(metric => {
         const metricGroup = document.createElement('div');

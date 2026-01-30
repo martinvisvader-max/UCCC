@@ -266,6 +266,45 @@ header h1 {
     font-style: italic;
 }
 
+/* Coming Soon Message Styling */
+.coming-soon-message {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border: 3px solid var(--bloomreach-yellow);
+    border-radius: 16px;
+    padding: 50px 40px;
+    text-align: center;
+    margin: 30px 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.coming-soon-message h3 {
+    color: var(--bloomreach-dark);
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.coming-soon-message p {
+    color: var(--bloomreach-dark);
+    line-height: 1.8;
+    margin: 12px 0;
+    font-size: 1.05em;
+}
+
+.coming-soon-message strong {
+    color: var(--bloomreach-dark);
+    font-weight: 600;
+}
+
+.channel-info {
+    margin-top: 12px;
+    padding: 10px 15px;
+    background: rgba(255, 213, 0, 0.1);
+    border-left: 4px solid var(--bloomreach-yellow);
+    border-radius: 6px;
+    font-size: 0.95em;
+}
+
 .metric-group input {
     padding: 12px 15px;
     font-size: 16px;
